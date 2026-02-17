@@ -21,6 +21,7 @@ if (!process.env.DATABASE_URL) {
 }
 const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
+    ssl: process.env.NODE_ENV === "production" ? { rejectUnauthorized: false } : false,
 });
 
 
@@ -50,6 +51,7 @@ app.use(
         store: new PgSession({
             pool,
             tableName: "Session",
+            errorLog: (err) => console.error("PgSession store error:", err),
         }),
         secret: process.env.SESSION_SECRET || "your-secret-key",
         resave: false,
