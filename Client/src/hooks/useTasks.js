@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import taskService from "../services/taskService";
+import { useAuth } from "../context/AuthContext";
 
 /**
  * Custom hook for managing tasks
  * @returns {Object} Task state and methods
  */
 export const useTasks = (initialStatus = null) => {
+  const { isAuthenticated } = useAuth();
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -67,8 +69,10 @@ export const useTasks = (initialStatus = null) => {
   };
 
   useEffect(() => {
-    fetchTasks();
-  }, []);
+    if (isAuthenticated) {
+      fetchTasks();
+    }
+  }, [isAuthenticated]);
 
   return {
     tasks,
