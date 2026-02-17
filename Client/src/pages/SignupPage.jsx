@@ -6,7 +6,7 @@ import Button from "../components/ui/Button";
 import Card from "../components/ui/Card";
 
 /**
- * Signup Page Component
+ * Signup Page — Cream & Purple Theme
  */
 const SignupPage = () => {
   const [formData, setFormData] = useState({
@@ -24,7 +24,6 @@ const SignupPage = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-    // Clear error for this field
     if (errors[name]) {
       setErrors((prev) => ({ ...prev, [name]: "" }));
     }
@@ -72,18 +71,26 @@ const SignupPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-blue-50 to-indigo-100 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full">
+    <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full animate-fade-in-up">
+        {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">TaskNest</h1>
-          <h2 className="text-2xl font-semibold text-gray-700">Create Account</h2>
-          <p className="mt-2 text-gray-600">Join us to manage your tasks</p>
+          <div className="w-16 h-16 mx-auto mb-4 bg-[#6C63FF] rounded-2xl flex items-center justify-center shadow-lg shadow-indigo-500/30">
+            <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+            </svg>
+          </div>
+          <h1 className="text-3xl font-bold text-[#4A4A4A] mb-1">
+            Create Account
+          </h1>
+          <p className="text-[#9B9B9B]">Join us to manage your tasks</p>
         </div>
 
-        <Card>
-          <form onSubmit={handleSubmit} className="space-y-6">
+        {/* Form Card */}
+        <Card className="shadow-lg animate-fade-in-up">
+          <form onSubmit={handleSubmit} className="space-y-5">
             {errors.general && (
-              <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+              <div className="bg-red-50 border border-red-100 text-red-600 px-4 py-3 rounded-xl text-sm font-medium">
                 {errors.general}
               </div>
             )}
@@ -132,18 +139,18 @@ const SignupPage = () => {
               type="submit"
               variant="primary"
               disabled={loading}
-              className="w-full"
+              className="w-full shadow-lg shadow-indigo-500/20"
             >
               {loading ? "Creating account..." : "Sign Up"}
             </Button>
           </form>
 
           <div className="mt-6 text-center">
-            <p className="text-gray-600">
+            <p className="text-gray-500 text-sm">
               Already have an account?{" "}
               <Link
                 to="/login"
-                className="text-blue-600 hover:text-blue-700 font-medium"
+                className="text-[#6C63FF] hover:text-[#5A52D5] font-semibold transition-colors"
               >
                 Sign in
               </Link>

@@ -3,8 +3,7 @@ import Button from "./ui/Button";
 import Input from "./ui/Input";
 
 /**
- * Task Form Component
- * Form for creating/editing tasks
+ * Task Form Component — Cream & Purple Theme
  */
 const TaskForm = ({ onSubmit, onCancel, initialData = null }) => {
   const [formData, setFormData] = useState({
@@ -18,7 +17,6 @@ const TaskForm = ({ onSubmit, onCancel, initialData = null }) => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-    // Clear error for this field
     if (errors[name]) {
       setErrors((prev) => ({ ...prev, [name]: "" }));
     }
@@ -35,7 +33,7 @@ const TaskForm = ({ onSubmit, onCancel, initialData = null }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = validate();
-    
+
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       return;
@@ -43,7 +41,6 @@ const TaskForm = ({ onSubmit, onCancel, initialData = null }) => {
 
     try {
       await onSubmit(formData);
-      // Reset form if it's a create form (no initialData)
       if (!initialData) {
         setFormData({ title: "", description: "", status: "PENDING" });
       }
@@ -53,7 +50,7 @@ const TaskForm = ({ onSubmit, onCancel, initialData = null }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit} className="space-y-5">
       <Input
         label="Task Title"
         name="title"
@@ -67,7 +64,7 @@ const TaskForm = ({ onSubmit, onCancel, initialData = null }) => {
       <div className="w-full">
         <label
           htmlFor="description"
-          className="block text-sm font-medium text-gray-700 mb-1"
+          className="block text-sm font-medium text-[#4A4A4A] mb-1.5"
         >
           Description
         </label>
@@ -78,7 +75,7 @@ const TaskForm = ({ onSubmit, onCancel, initialData = null }) => {
           onChange={handleChange}
           placeholder="Enter task description (optional)"
           rows="4"
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none resize-none"
+          className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-[#4A4A4A] placeholder:text-gray-400 focus:ring-2 focus:ring-[#6C63FF]/30 focus:border-[#6C63FF] outline-none resize-none transition-all duration-200"
         />
       </div>
 
@@ -86,7 +83,7 @@ const TaskForm = ({ onSubmit, onCancel, initialData = null }) => {
         <div className="w-full">
           <label
             htmlFor="status"
-            className="block text-sm font-medium text-gray-700 mb-1"
+            className="block text-sm font-medium text-[#4A4A4A] mb-1.5"
           >
             Status
           </label>
@@ -95,7 +92,7 @@ const TaskForm = ({ onSubmit, onCancel, initialData = null }) => {
             name="status"
             value={formData.status}
             onChange={handleChange}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+            className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-[#4A4A4A] focus:ring-2 focus:ring-[#6C63FF]/30 focus:border-[#6C63FF] outline-none transition-all duration-200"
           >
             <option value="PENDING">Pending</option>
             <option value="COMPLETED">Completed</option>

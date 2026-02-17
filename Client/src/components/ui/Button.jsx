@@ -1,5 +1,5 @@
 /**
- * Reusable Button Component
+ * Reusable Button Component — Cream & Purple Theme
  */
 const Button = ({
   children,
@@ -11,14 +11,19 @@ const Button = ({
   ...props
 }) => {
   const baseStyles =
-    "px-4 py-2 rounded-lg font-medium transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed";
+    "px-5 py-2.5 rounded-xl font-semibold text-sm transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer flex items-center justify-center gap-2";
 
   const variants = {
-    primary: "bg-blue-600 hover:bg-blue-700 text-white",
-    secondary: "bg-gray-600 hover:bg-gray-700 text-white",
-    danger: "bg-red-600 hover:bg-red-700 text-white",
-    success: "bg-green-600 hover:bg-green-700 text-white",
-    outline: "border-2 border-blue-600 text-blue-600 hover:bg-blue-50",
+    primary:
+      "bg-[#6C63FF] hover:bg-[#5A52D5] text-white shadow-md shadow-indigo-500/20 hover:shadow-lg hover:shadow-indigo-500/30 hover:-translate-y-0.5",
+    secondary:
+      "bg-white hover:bg-gray-50 text-[#4A4A4A] border border-gray-200 shadow-sm",
+    danger:
+      "bg-red-500 hover:bg-red-600 text-white shadow-md shadow-red-500/20",
+    success:
+      "bg-[#4CAF50] hover:bg-[#43A047] text-white shadow-md shadow-green-500/20",
+    outline:
+      "border-2 border-[#6C63FF] text-[#6C63FF] hover:bg-[#6C63FF]/5",
   };
 
   return (

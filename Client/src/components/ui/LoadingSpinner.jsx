@@ -1,16 +1,16 @@
 /**
- * Loading Spinner Component
+ * Loading Spinner Component — Cream & Purple Theme
  */
 const LoadingSpinner = ({ size = "medium", className = "" }) => {
   const sizes = {
-    small: "w-6 h-6",
-    medium: "w-10 h-10",
-    large: "w-16 h-16",
+    small: "w-6 h-6 border-2",
+    medium: "w-10 h-10 border-3",
+    large: "w-16 h-16 border-4",
   };
 
   return (
     <div
-      className={`${sizes[size]} border-4 border-gray-200 border-t-blue-600 rounded-full animate-spin ${className}`}
+      className={`${sizes[size]} border-gray-200 border-t-[#6C63FF] rounded-full animate-spin ${className}`}
     ></div>
   );
 };

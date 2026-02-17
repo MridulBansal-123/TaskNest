@@ -3,8 +3,7 @@ import Card from "./ui/Card";
 import Button from "./ui/Button";
 
 /**
- * Task Card Component
- * Displays a single task with actions
+ * Task Card Component — Cream & Purple Theme
  */
 const TaskCard = ({ task, onUpdate, onDelete, onToggleStatus }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -39,11 +38,18 @@ const TaskCard = ({ task, onUpdate, onDelete, onToggleStatus }) => {
     setEditedTask((prev) => ({ ...prev, [name]: value }));
   };
 
+  const isCompleted = task.status === "COMPLETED";
+
+  // Status Accent Colors
+  const accentColor = isCompleted
+    ? "border-l-[#4CAF50]" // Green for success
+    : "border-l-[#FFB6C1]"; // Pink for priority/pending
+
   return (
-    <Card className="hover:shadow-lg transition-shadow duration-200">
+    <Card className={`border-l-4 ${accentColor} hover:shadow-md transition-all duration-200 animate-fade-in-up bg-white`}>
       <div className="flex items-start justify-between gap-4">
         {/* Task Content */}
-        <div className="flex-1">
+        <div className="flex-1 min-w-0">
           {isEditing ? (
             <div className="space-y-3">
               <input
@@ -51,7 +57,7 @@ const TaskCard = ({ task, onUpdate, onDelete, onToggleStatus }) => {
                 name="title"
                 value={editedTask.title}
                 onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+                className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-xl text-[#4A4A4A] placeholder:text-gray-400 focus:ring-2 focus:ring-[#6C63FF]/20 focus:border-[#6C63FF] outline-none transition-all duration-200"
               />
               <textarea
                 name="description"
@@ -59,13 +65,13 @@ const TaskCard = ({ task, onUpdate, onDelete, onToggleStatus }) => {
                 onChange={handleChange}
                 rows="3"
                 placeholder="Description (optional)"
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none resize-none"
+                className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-xl text-[#4A4A4A] placeholder:text-gray-400 focus:ring-2 focus:ring-[#6C63FF]/20 focus:border-[#6C63FF] outline-none resize-none transition-all duration-200"
               />
               <div className="flex gap-2">
-                <Button onClick={handleSave} variant="success" className="text-sm py-1">
+                <Button onClick={handleSave} variant="success" className="text-xs py-1.5 px-3">
                   Save
                 </Button>
-                <Button onClick={handleCancel} variant="secondary" className="text-sm py-1">
+                <Button onClick={handleCancel} variant="secondary" className="text-xs py-1.5 px-3">
                   Cancel
                 </Button>
               </div>
@@ -73,44 +79,49 @@ const TaskCard = ({ task, onUpdate, onDelete, onToggleStatus }) => {
           ) : (
             <>
               <div className="flex items-start gap-3">
-                <input
-                  type="checkbox"
-                  checked={task.status === "COMPLETED"}
-                  onChange={() => onToggleStatus(task)}
-                  className="mt-1 w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500 cursor-pointer"
-                />
-                <div className="flex-1">
-                  <h3
-                    className={`text-lg font-semibold ${
-                      task.status === "COMPLETED"
-                        ? "line-through text-gray-500"
-                        : "text-gray-900"
+                {/* Custom checkbox */}
+                <button
+                  onClick={() => onToggleStatus(task)}
+                  className={`mt-0.5 w-5 h-5 rounded-md border-2 flex items-center justify-center flex-shrink-0 transition-all duration-200 cursor-pointer ${isCompleted
+                      ? "bg-[#4CAF50] border-[#4CAF50] shadow-sm"
+                      : "border-gray-300 hover:border-[#6C63FF] bg-white"
                     }`}
+                >
+                  {isCompleted && (
+                    <svg className="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                    </svg>
+                  )}
+                </button>
+                <div className="flex-1 min-w-0">
+                  <h3
+                    className={`text-base font-bold transition-all duration-200 ${isCompleted
+                        ? "text-gray-400 line-through decoration-gray-300"
+                        : "text-[#4A4A4A]"
+                      }`}
                   >
                     {task.title}
                   </h3>
                   {task.description && (
                     <p
-                      className={`mt-1 text-sm ${
-                        task.status === "COMPLETED"
-                          ? "text-gray-400"
-                          : "text-gray-600"
-                      }`}
+                      className={`mt-1 text-sm leading-relaxed ${isCompleted ? "text-gray-400" : "text-[#9B9B9B]"
+                        }`}
                     >
                       {task.description}
                     </p>
                   )}
-                  <div className="mt-2 flex items-center gap-2">
+                  <div className="mt-2.5 flex items-center gap-2">
                     <span
-                      className={`inline-block px-2 py-1 text-xs font-medium rounded ${
-                        task.status === "COMPLETED"
-                          ? "bg-green-100 text-green-800"
-                          : "bg-yellow-100 text-yellow-800"
-                      }`}
+                      className={`inline-flex items-center px-2.5 py-0.5 text-xs font-semibold rounded-full ${isCompleted
+                          ? "bg-green-50 text-[#4CAF50] border border-green-100"
+                          : "bg-pink-50 text-[#FF8DA1] border border-pink-100"
+                        }`}
                     >
+                      <span className={`w-1.5 h-1.5 rounded-full mr-1.5 ${isCompleted ? "bg-[#4CAF50]" : "bg-[#FFB6C1]"
+                        }`}></span>
                       {task.status}
                     </span>
-                    <span className="text-xs text-gray-500">
+                    <span className="text-xs text-gray-400">
                       {new Date(task.createdAt).toLocaleDateString()}
                     </span>
                   </div>
@@ -122,14 +133,14 @@ const TaskCard = ({ task, onUpdate, onDelete, onToggleStatus }) => {
 
         {/* Actions */}
         {!isEditing && (
-          <div className="flex gap-2">
+          <div className="flex gap-1">
             <button
               onClick={handleEdit}
-              className="text-blue-600 hover:text-blue-800 p-2 hover:bg-blue-50 rounded transition-colors"
+              className="text-gray-400 hover:text-[#6C63FF] p-2 hover:bg-[#6C63FF]/5 rounded-lg transition-all duration-200 cursor-pointer"
               title="Edit task"
             >
               <svg
-                className="w-5 h-5"
+                className="w-4.5 h-4.5"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -144,11 +155,11 @@ const TaskCard = ({ task, onUpdate, onDelete, onToggleStatus }) => {
             </button>
             <button
               onClick={() => onDelete(task.id)}
-              className="text-red-600 hover:text-red-800 p-2 hover:bg-red-50 rounded transition-colors"
+              className="text-gray-400 hover:text-red-500 p-2 hover:bg-red-50 rounded-lg transition-all duration-200 cursor-pointer"
               title="Delete task"
             >
               <svg
-                className="w-5 h-5"
+                className="w-4.5 h-4.5"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
