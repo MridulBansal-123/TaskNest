@@ -30,11 +30,15 @@ const app = express();
 // Trust Railway's reverse proxy — required for secure cookies behind a proxy
 app.set("trust proxy", 1);
 
+const clientUrl = process.env.CLIENT_URL?.replace(/\/$/, "") || "http://localhost:5173";
+console.log(`Server starting with NODE_ENV: ${process.env.NODE_ENV}`);
+console.log(`CORS allowing origin: ${clientUrl}`);
+
 app.use(cors({
-    origin: process.env.CLIENT_URL || "http://localhost:5173",
+    origin: clientUrl,
     credentials: true,
-    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"]
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"]
 }));
 
 app.use(express.json());
